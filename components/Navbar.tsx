@@ -4,7 +4,6 @@ import Link from "next/link";
 
 const Navbar = () => {
 	const { data, status } = useSession();
-	console.log(data);
 	return (
 		<nav className="nav shadow p-2 justify-content-between mb-2">
 			<Link href={"/"} className="nav-link">
@@ -12,7 +11,10 @@ const Navbar = () => {
 			</Link>
 			{status === "authenticated" ? (
 				<div className="justify-content-end d-flex align-items-center">
-					<Link href={"/dashboard/user"} className="nav-link">
+					<Link
+						href={`/dashboard/${data.user.role === "user" ? "user" : "admin"}`}
+						className="nav-link"
+					>
 						{data.user.name} ({data?.user?.role})
 					</Link>
 					<a
