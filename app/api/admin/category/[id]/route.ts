@@ -35,7 +35,6 @@ export async function PUT(req: NextRequest, { params }: Props) {
 }
 export async function DELETE(req: NextRequest, { params }: Props) {
 	await dbConnect();
-	console.log(params, "delete category id");
 
 	try {
 		const deletedCategory = await Category.findByIdAndDelete(params.id);

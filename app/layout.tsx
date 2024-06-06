@@ -5,6 +5,7 @@ import "bootstrap-material-design/dist/css/bootstrap-material-design.min.css";
 import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/providers/AuthProvider";
+import { CategoryProvider } from "@/context/CategoryContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,11 +22,13 @@ export default function RootLayout({
 	return (
 		<html lang="en">
 			<AuthProvider>
-				<body className={inter.className}>
-					<Navbar />
-					{children}
-					<Toaster />
-				</body>
+				<CategoryProvider>
+					<body className={inter.className}>
+						<Navbar />
+						{children}
+						<Toaster />
+					</body>
+				</CategoryProvider>
 			</AuthProvider>
 		</html>
 	);
