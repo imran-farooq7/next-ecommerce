@@ -1,8 +1,25 @@
 "use client";
-import { ReactNode, createContext, useState, useEffect } from "react";
+import {
+	ReactNode,
+	createContext,
+	useState,
+	useEffect,
+	Dispatch,
+	SetStateAction,
+} from "react";
 import toast from "react-hot-toast";
-
-export const CategoryContext = createContext({});
+interface CategoryContext {
+	name: string;
+	setName: Dispatch<SetStateAction<string>>;
+	createCategory: () => Promise<void>;
+	fetchCategories: () => Promise<void>;
+	updatingCategory: () => Promise<void>;
+	deleteCatgory: () => Promise<void>;
+	updateCategory: any;
+	setUpdateCategory: Dispatch<any>;
+	categories: any[];
+}
+export const CategoryContext = createContext<CategoryContext>(null);
 
 export const CategoryProvider = ({ children }: { children: ReactNode }) => {
 	const [name, setName] = useState("");
@@ -23,7 +40,8 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
 				setName("");
 				setCategories([...categories, data.category]);
 			} else {
-				toast.error(data.error.message);
+				console.log(data, "from create category");
+				toast.error(data);
 			}
 		} catch (error) {
 			if (error instanceof Error) {
@@ -36,7 +54,7 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
 			const res = await fetch("/api/admin/category");
 			const data = await res.json();
 			if (res.ok) {
-				setCategories(data.categories);
+				setCategories(data);
 			} else {
 				toast.error(data.error.message);
 			}
@@ -54,7 +72,7 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
 				headers: {
 					"Content-Type": "application/json",
 				},
-				body: JSON.stringify({ name }),
+				body: JSON.stringify(updateCategory),
 			});
 			const data = await res.json();
 			if (res.ok) {
@@ -93,6 +111,10 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
 			}
 		}
 	};
+	useEffect(() => {
+		fetchCategories();
+	}, [categories.length, updateCategory]);
+
 	return (
 		<CategoryContext.Provider
 			value={{
@@ -102,6 +124,9 @@ export const CategoryProvider = ({ children }: { children: ReactNode }) => {
 				fetchCategories,
 				deleteCatgory,
 				updatingCategory,
+				updateCategory,
+				setUpdateCategory,
+				categories,
 			}}
 		>
 			{children}

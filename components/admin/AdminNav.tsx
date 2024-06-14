@@ -7,7 +7,7 @@ const AdminNav = () => {
 				Admin
 			</Link>
 			<Link href={"/dashboard/admin/category"} className="nav-link">
-				Create category
+				Categories
 			</Link>
 		</nav>
 	);
