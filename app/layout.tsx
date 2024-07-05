@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import { Toaster } from "react-hot-toast";
 import AuthProvider from "@/providers/AuthProvider";
 import { CategoryProvider } from "@/context/CategoryContext";
+import { TagProvider } from "@/context/TagContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,11 +24,13 @@ export default function RootLayout({
 		<html lang="en">
 			<AuthProvider>
 				<CategoryProvider>
-					<body className={inter.className}>
-						<Navbar />
-						{children}
-						<Toaster />
-					</body>
+					<TagProvider>
+						<body className={inter.className}>
+							<Navbar />
+							{children}
+							<Toaster />
+						</body>
+					</TagProvider>
 				</CategoryProvider>
 			</AuthProvider>
 		</html>
