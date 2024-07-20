@@ -7,9 +7,9 @@ export default withAuth(
 	async function middleware(req) {
 		const url = req.nextUrl.pathname;
 		const role = req.nextauth.token.user.role;
-		if (url.includes("/admin") && role !== "admin") {
-			return NextResponse.redirect(new URL("/", req.url));
-		}
+		// if (url.includes("/admin") && role !== "admin") {
+		// 	return NextResponse.redirect(new URL("/", req.url));
+		// }
 	},
 	{
 		callbacks: {

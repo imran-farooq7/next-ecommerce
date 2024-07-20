@@ -14,7 +14,8 @@ const tagSchema = new mongoose.Schema(
 			type: String,
 			unique: true,
 			lowercase: true,
-			index: true,
+			// default: undefined,
+			// index: true,
 		},
 		parent: {
 			type: mongoose.Schema.Types.ObjectId,

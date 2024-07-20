@@ -1,9 +1,29 @@
 "use client";
 
-import { createContext, useState } from "react";
+import {
+	createContext,
+	Dispatch,
+	SetStateAction,
+	useEffect,
+	useState,
+} from "react";
 import toast from "react-hot-toast";
+interface TagContext {
+	name: string;
+	setName: Dispatch<SetStateAction<string>>;
+	createTag: () => Promise<void>;
+	getTag: () => Promise<void>;
+	updateTag: () => Promise<void>;
+	deleteTag: () => Promise<void>;
+	updatingTag: any;
+	setUpdatingTag: Dispatch<any>;
+	parentCategory: string;
+	setParentCategory: Dispatch<SetStateAction<string>>;
+	tags: any[];
+	setTags: Dispatch<SetStateAction<any[]>>;
+}
 
-export const TagContext = createContext(null);
+export const TagContext = createContext<TagContext>(null);
 
 export const TagProvider = ({ children }: { children: React.ReactNode }) => {
 	const [name, setName] = useState("");
@@ -87,6 +107,10 @@ export const TagProvider = ({ children }: { children: React.ReactNode }) => {
 			}
 		} catch (error) {}
 	};
+	// useEffect(() => {
+	// 	getTag();
+	// }, []);
+
 	return (
 		<TagContext.Provider
 			value={{
